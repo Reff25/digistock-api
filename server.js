@@ -8,20 +8,19 @@ app.get("/", (req, res) => {
   res.send("DigiStock API is running 🔥");
 });
 
-// Status test
+// Status
 app.get("/status", (req, res) => {
   res.json({ ok: true });
 });
 
-// Simple license test (جاهز للمستقبل)
+// Validate key (demo)
 app.post("/validate-key", (req, res) => {
   const { key } = req.body;
 
   if (!key) {
-    return res.json({ valid: false, message: "no key" });
+    return res.json({ valid: false });
   }
 
-  // temporary demo logic
   if (key === "TRIAL-123") {
     return res.json({
       valid: true,
@@ -44,13 +43,4 @@ app.post("/validate-key", (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
-});
-
-app.get("/db-test", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-    res.json({ ok: true, time: result.rows[0] });
-  } catch (e) {
-    res.json({ ok: false, error: e.message });
-  }
 });
