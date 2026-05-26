@@ -49,14 +49,8 @@ app.listen(PORT, () => {
 app.get("/db-test", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
-    res.json({
-      connected: true,
-      time: result.rows[0]
-    });
-  } catch (err) {
-    res.json({
-      connected: false,
-      error: err.message
-    });
+    res.json({ ok: true, time: result.rows[0] });
+  } catch (e) {
+    res.json({ ok: false, error: e.message });
   }
 });
