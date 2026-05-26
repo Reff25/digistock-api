@@ -45,3 +45,18 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server running on port " + PORT);
 });
+
+app.get("/db-test", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json({
+      connected: true,
+      time: result.rows[0]
+    });
+  } catch (err) {
+    res.json({
+      connected: false,
+      error: err.message
+    });
+  }
+});
